@@ -20,6 +20,8 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
 
     logging.info('\nStarting run.')
 
+    update_msg = '\nAuto-updated ' + datetime.now().strftime("%Y-%m-%d %H:%M") 
+
     with open('private.json', 'r') as f:
         priv = json.load(f)
     src = priv['src_names']
@@ -54,6 +56,7 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
                 body['colorId'] = 8
                 body = add_reminder(body)
                 body = append_desc(body, priv['zoom_desc'])
+                body = append_desc(body, update_msg)
                 body['location'] = priv['zoom_link']
 
                 title = body['summary'].lower()
@@ -70,6 +73,7 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
                 eid = create_id(base, event['id'])
                 body = copy_event(event)
                 body['id'] = eid
+                body = append_desc(body, update_msg)
                 #body['colorId'] = 10
 
                 place_event(service, dest_id, eid, body)
