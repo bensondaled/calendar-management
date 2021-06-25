@@ -1,6 +1,6 @@
 ##
 from contextlib import redirect_stderr
-logfile = '/Users/bdd/cloud/code/calendar-management/log.txt'
+logfile = './log.txt'
 
 with open(logfile, 'a') as stderr, redirect_stderr(stderr):
 
