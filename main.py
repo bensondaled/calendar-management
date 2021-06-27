@@ -55,9 +55,11 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
                 body['id'] = eid
                 body['colorId'] = 8
                 body = add_reminder(body)
-                body = append_desc(body, priv['zoom_desc'])
-                body = append_desc(body, update_msg)
+                old_loc = body.get('location', '')
                 body['location'] = priv['zoom_link']
+                body = append_desc(body, priv['zoom_desc'])
+                body = append_desc(body, f'\nOriginal location info:\n{old_loc}\n')
+                body = append_desc(body, update_msg)
 
                 title = body['summary'].lower()
                 if 'report' in title or 'grand' in title or 'conference' in title:
