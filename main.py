@@ -80,9 +80,18 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
                 placed.append(eid)
 
         elif src[2] in name:
-            # take all but publish only days where change occurs
-            # could do, but skipping for now bc was so easy to do manually
-            pass
+            for event in events:
+                base = src[2]
+                for s in strip:
+                    base = base.strip(s)
+                eid = create_id(base, event['id'])
+                body = copy_event(event)
+                body['id'] = eid
+                body = append_desc(body, update_msg)
+                title = body['summary']
+                if title.startswith('PM:') or 'AN' in title or 'SP' in title:
+                    place_event(service, dest_id, eid, body)
+                    placed.append(eid)
 
         else:
             pass
