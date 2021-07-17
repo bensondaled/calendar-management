@@ -62,7 +62,7 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
                 body = append_desc(body, update_msg)
 
                 title = body['summary'].lower()
-                if 'report' in title or 'grand' in title or 'conference' in title:
+                if ('report' in title or 'grand' in title or 'conference' in title) and (not title.startswith('va ')):
                     place_event(service, dest_id, eid, body)
                     placed.append(eid)
 
