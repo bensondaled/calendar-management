@@ -41,7 +41,14 @@ def append_desc(body, content):
     return body
 
 def create_id(base, id):
-    return base + id.replace('_', '')
+    eid = base + id.replace('_', '')
+    for ch in eid:
+        eid = eid.replace(ch, ch.lower())
+    eid = eid.replace('w', 'avva')
+    eid = eid.replace('x', 'avvva')
+    eid = eid.replace('y', 'avvvva')
+    eid = eid.replace('z', 'avvvvva')
+    return eid
 
 def place_event(service, dest_id, eid, body):
     try:

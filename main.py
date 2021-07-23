@@ -49,7 +49,7 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
             for event in events:
                 base = src[0]
                 for s in strip:
-                    base = base.strip(s)
+                    base = base.replace(s, '')
                 eid = create_id(base, event['id'])
                 body = copy_event(event)
                 body['id'] = eid
@@ -71,7 +71,7 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
             for event in events:
                 base = src[1]
                 for s in strip:
-                    base = base.strip(s)
+                    base = base.replace(s, '')
                 eid = create_id(base, event['id'])
                 body = copy_event(event)
                 body['id'] = eid
@@ -85,7 +85,7 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
             for event in events:
                 base = src[2]
                 for s in strip:
-                    base = base.strip(s)
+                    base = base.replace(s, '')
                 eid = create_id(base, event['id'])
                 body = copy_event(event)
                 body['id'] = eid
@@ -96,7 +96,6 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
                     place_event(service, dest_id, eid, body)
                     placed.append(eid)
                 elif title.startswith('call:'):
-                    print(title)
                     place_event(service, dest_id, eid, body)
                     placed.append(eid)
 
