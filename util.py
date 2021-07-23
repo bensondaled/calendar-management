@@ -6,7 +6,7 @@ def get_calendars(service):
     return calendars
 
 def get_events(service, calendar_id):
-    start = datetime.utcnow() - timedelta(days=1)
+    start = datetime.utcnow() - timedelta(days=3)
     stop = start + timedelta(days=365)
     start, stop = start.isoformat()+'Z', stop.isoformat()+'Z'
 

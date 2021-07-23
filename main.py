@@ -56,12 +56,19 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
                 body['colorId'] = 8
                 body = add_reminder(body)
                 old_loc = body.get('location', '')
-                body['location'] = old_loc#priv['zoom_link']
-                body = append_desc(body, priv['zoom_desc'])
-                #body = append_desc(body, f'\nOriginal location info:\n{old_loc}\n')
                 body = append_desc(body, update_msg)
-
+                
                 title = body['summary'].lower()
+                
+                if 'grand rounds' in title:
+                    body = append_desc(body, priv['grand_zoom_desc'])
+                    body['location'] = priv['grand_zoom_desc']
+                    body = append_desc(body, f'\nOriginal location info:\n{old_loc}\n')
+                else:
+                    body['location'] = old_loc#priv['zoom_link']
+                    body = append_desc(body, priv['zoom_desc'])
+                    #body = append_desc(body, f'\nOriginal location info:\n{old_loc}\n')
+
                 if ('report' in title or 'grand' in title or 'conference' in title) and (not title.startswith('va ')):
                     place_event(service, dest_id, eid, body)
                     placed.append(eid)
