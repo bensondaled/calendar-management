@@ -90,11 +90,13 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
                 body = copy_event(event)
                 body['id'] = eid
                 body = append_desc(body, update_msg)
-                title = body['summary']
-                if title.startswith('PM:') or 'AN' in title or 'SP' in title:
+                title_raw = body['summary']
+                title = title_raw.lower()
+                if title.startswith('pm:') or 'AN' in title_raw or 'SP' in title_raw:
                     place_event(service, dest_id, eid, body)
                     placed.append(eid)
-                elif title.startswith('Call:') or 'Call' in title:
+                elif title.startswith('call:'):
+                    print(title)
                     place_event(service, dest_id, eid, body)
                     placed.append(eid)
 
