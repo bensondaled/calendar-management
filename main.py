@@ -94,6 +94,9 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
                 if title.startswith('PM:') or 'AN' in title or 'SP' in title:
                     place_event(service, dest_id, eid, body)
                     placed.append(eid)
+                elif title.startswith('Call:') or 'Call' in title:
+                    place_event(service, dest_id, eid, body)
+                    placed.append(eid)
 
         else:
             pass
