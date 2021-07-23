@@ -103,6 +103,7 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
                     place_event(service, dest_id, eid, body)
                     placed.append(eid)
                 elif title.startswith('call:'):
+                    body = truncate_event(body)
                     place_event(service, dest_id, eid, body)
                     placed.append(eid)
 

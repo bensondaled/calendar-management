@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import dateutil.parser
 
 def get_calendars(service):
     calendars_result = service.calendarList().list().execute()
@@ -55,4 +56,23 @@ def place_event(service, dest_id, eid, body):
         service.events().update(calendarId=dest_id, eventId=eid, body=body).execute()
     except:
         service.events().insert(calendarId=dest_id, body=body).execute()
+
+def truncate_event(body, n_hrs=1):
+    if 'end' not in body or 'start' not in body:
+        return body
+    start = body['start']['dateTime']
+    end = body['end']['dateTime']
+    
+    if not start.endswith('Z') and end.endswith('Z'):
+        print('Not truncating event b/c not UTC so unsafe')
+        return body
+
+    start = dateutil.parser.parse(start)
+    end = dateutil.parser.parse(end)
+
+    new_end = end.replace(day=start.day, hour=start.hour+1)
+    new_end = new_end.strftime('%Y-%m-%dT%H:%M:%S') 
+    body['end']['dateTime'] = new_end
+
+    return body
 
