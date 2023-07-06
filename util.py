@@ -60,6 +60,7 @@ def place_event(service, dest_id, eid, body):
 def truncate_event(body, n_hrs=1):
     if 'end' not in body or 'start' not in body:
         return body
+
     start = body['start']['dateTime']
     end = body['end']['dateTime']
     
@@ -69,9 +70,13 @@ def truncate_event(body, n_hrs=1):
 
     start = dateutil.parser.parse(start)
     end = dateutil.parser.parse(end)
-
-    new_end = end.replace(day=start.day, hour=start.hour+1)
+    
+    newmin = start.minute + 59
+    if newmin > 59:
+        newmin = start.minute+5
+    new_end = end.replace(day=start.day, month=start.month, hour=start.hour, minute=newmin)
     new_end = new_end.strftime('%Y-%m-%dT%H:%M:%S') 
+
     body['end']['dateTime'] = new_end
 
     return body
