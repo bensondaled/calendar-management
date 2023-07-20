@@ -59,7 +59,7 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
                 if 'call' in title or 'dac' in title or '1pm' in title:
                     body = truncate_event(body) # for events that cross days
 
-                    body['summary'] = body['summary'].strip('Call: ')
+                    body['summary'] = body['summary'].replace('Call: ', '')
 
                     place_event(service, dest_id, eid, body)
                     placed.append(eid)
