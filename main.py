@@ -56,7 +56,7 @@ with open(logfile, 'a') as stderr, redirect_stderr(stderr):
                 title_raw = body['summary']
                 title = title_raw.lower()
 
-                if 'call' in title or 'dac' in title or '1pm' in title or 'pager' in title:
+                if 'call' in title or 'dac' in title or '1pm' in title or 'pager' in title or 'swing' in title or 'relief' in title or 'early' in title or 'education' in title or 'nf ' in title:
                     body = truncate_event(body) # for events that cross days
 
                     body['summary'] = body['summary'].replace('Call: ', '')
